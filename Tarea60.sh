@@ -33,7 +33,7 @@ read -p "Donde desea realizar la configuración 'usuario' o 'grupo'" var1
 case $var1 in
 1) user ;;
 2) group ;;
-
+}
 
 f_existe_directorio () {
 echo "Indique el nombre del directorio que quiere buscar"
@@ -47,5 +47,5 @@ echo"grupo selecccionado"
 
 user(){
 echo"Usuario selecccionado"
-
+}
 f_configura_quota
