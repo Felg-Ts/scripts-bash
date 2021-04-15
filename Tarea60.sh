@@ -49,16 +49,40 @@ esac
 
 cuotauser(){
 echo "edición de cuota"
+echo "indique el usuario a configurar"
+read var3
+edquota -u $var3
 }
 
 periodouser(){
 echo "edición de periodo de gracia"
+echo "indique el usuario a configurar"
+read var3
+edquota -u $var3 -T
 }
-
-
 
 group(){
 echo "grupo selecccionado"
+echo "Seleccione la edición a realizar: 'cuota' o 'periodo'"
+read var2
+case $var2 in
+    cuota) cuotagroup ;;
+    periodo) periodogroup ;;
+esac
+}
+
+cuotagroup(){
+echo "edición de cuota"
+echo "indique el grupo a configurar"
+read var3
+edquota -g $var3 -T
+}
+
+periodogroup(){
+echo "edición de periodo de gracia"
+echo "indique el grupo a configurar"
+read var3
+edquota -g $var3 -T
 }
 
 
