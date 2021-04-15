@@ -21,20 +21,23 @@ quotacheck -ugm /QUOTA
 find / aquota | egrep -o aquota 2> /dev/nulls
 quotaon -V /QUOTA
 ficheros
-}
-
-f_plantilla_quota () {
-echo "Donde desea realizar la configuración 'usuario' o 'grupo'"
-read var1
-if var1 == "usuario"
-echo"Usuario selecccionado"
-elif var1 == "grupo"
-echo"grupo selecccionado"
 fi
 }
 
-f_configura_quota () {
+#f_plantilla_quota () {
 
+#}
+
+f_configura_quota () {
+echo "Donde desea realizar la configuración 'usuario' o 'grupo'"
+read var1 in
+user(){
+echo"Usuario selecccionado"
+}
+group(){
+echo"grupo selecccionado"
+}
+fi
 }
 
 f_existe_directorio () {
