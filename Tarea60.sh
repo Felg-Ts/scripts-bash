@@ -5,20 +5,43 @@ blkid | egrep /dev/$d
 }
 
 f_modifica_fstab () {
+cp /etc/fstab /tmp
 lsblk
 echo "Indique el nombre del dispositivo de bloques que quiere habilitar para quota"
+read var1
+echo "Indique el sistema de ficheros"
+read var2
+sed -i '/$var1/ d' fstab
+/tmp/fstab < '$var1     $var2'      defaults,noatime,nodiratime,usrquota,grpquota   0   1
+cat /tmp/fstab
+echo "Desea confirmar los cambios realizados en el fichero?"
+read var3
+case $var3 in
+    si) conf ;;
+    no) deny ;;
+esac
+}
+
+conf(){
+echo "aplicando cambios"
+mv /tmp/fstab /etc/fstab
+echo "cambios aplicados"
+}
+
+deny(){
+echo "cambios no aplicados"
 }
 
 f_habilita_quota () {
 echo "Buscando ficheros de cuotas"
 if
-find / aquota | egrep -o aquota 2> /dev/null
+find / -iname aquota 2> /dev/null
 then
 echo "ya existen los ficheros"
 else
 echo "Creando ficheros de coutas"
 quotacheck -ugm /QUOTA
-find / aquota | egrep -o aquota 2> /dev/null
+find / -iname aquota 2> /dev/null
 quotaon -V /QUOTA
 fi
 }
@@ -92,4 +115,4 @@ find / $a | egrep -o $a 2> /dev/nulls
 }
 
 
-f_configura_quota
+f_modifica_fstab
