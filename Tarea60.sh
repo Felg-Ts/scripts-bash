@@ -29,12 +29,38 @@ fi
 #}
 
 f_configura_quota () {
-read -p "Donde desea realizar la configuración 'usuario' o 'grupo'" var1
+echo "Donde desea realizar la configuración: 'usuario' o 'grupo'"
+read var1
 case $var1 in
     usuario) user ;;
     grupo) group ;;
 esac
 }
+
+user(){
+echo "Usuario selecccionado"
+echo "Seleccione la edición a realizar: 'cuota' o 'periodo'"
+read var2
+case $var2 in
+    cuota) cuotauser ;;
+    periodo) periodouser ;;
+esac
+}
+
+cuotauser(){
+echo "edición de cuota"
+}
+
+periodouser(){
+echo "edición de periodo de gracia"
+}
+
+
+
+group(){
+echo "grupo selecccionado"
+}
+
 
 f_existe_directorio () {
 echo "Indique el nombre del directorio que quiere buscar"
@@ -42,11 +68,5 @@ read a
 find / $a | egrep -o $a 2> /dev/nulls
 }
 
-group(){
-echo "grupo selecccionado"
-}
 
-user(){
-echo "Usuario selecccionado"
-}
 f_configura_quota
