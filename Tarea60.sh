@@ -31,8 +31,9 @@ fi
 f_configura_quota () {
 read -p "Donde desea realizar la configuración 'usuario' o 'grupo'" var1
 case $var1 in
-1) user ;;
-2) group ;;
+    1) user ;;
+    2) group ;;
+esac
 }
 
 f_existe_directorio () {
