@@ -9,12 +9,14 @@ cp /etc/fstab /tmp
 lsblk
 echo "Indique el nombre del dispositivo de bloques que quiere habilitar para quota"
 read var1
-echo "Indique el sistema de ficheros"
+echo "Indique el punto de montaje"
 read var2
-sed -i '/$var1/ d' fstab
-/tmp/fstab < '$var1     $var2'      defaults,noatime,nodiratime,usrquota,grpquota   0   1
+echo "Indique el sistema de ficheros"
+read var3
+sed -i '/$var1/ d' /tmp/fstab
+echo "$var1     $var2     $var3      defaults,noatime,nodiratime,usrquota,grpquota   0   1" >> /tmp/fstab
 cat /tmp/fstab
-echo "Desea confirmar los cambios realizados en el fichero?"
+echo "Desea confirmar los cambios realizados en el fichero? 'si' o 'no'"
 read var3
 case $var3 in
     si) conf ;;
