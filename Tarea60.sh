@@ -115,6 +115,3 @@ echo "Indique el nombre del directorio que quiere buscar"
 read a
 find / $a | egrep -o $a 2> /dev/nulls
 }
-
-
-f_modifica_fstab
