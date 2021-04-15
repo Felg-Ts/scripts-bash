@@ -31,8 +31,8 @@ fi
 f_configura_quota () {
 read -p "Donde desea realizar la configuración 'usuario' o 'grupo'" var1
 case $var1 in
-    1) user ;;
-    2) group ;;
+    usuario) user ;;
+    grupo) group ;;
 esac
 }
 
@@ -43,10 +43,10 @@ find / $a | egrep -o $a 2> /dev/nulls
 }
 
 group(){
-echo"grupo selecccionado"
+echo "grupo selecccionado"
 }
 
 user(){
-echo"Usuario selecccionado"
+echo "Usuario selecccionado"
 }
 f_configura_quota
