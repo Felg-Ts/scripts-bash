@@ -12,15 +12,14 @@ echo "Indique el nombre del dispositivo de bloques que quiere habilitar para quo
 f_habilita_quota () {
 echo "Buscando ficheros de cuotas"
 if
-find / aquota | egrep -o aquota 2> /dev/nulls
+find / aquota | egrep -o aquota 2> /dev/null
 then
 echo "ya existen los ficheros"
 else
 echo "Creando ficheros de coutas"
 quotacheck -ugm /QUOTA
-find / aquota | egrep -o aquota 2> /dev/nulls
+find / aquota | egrep -o aquota 2> /dev/null
 quotaon -V /QUOTA
-ficheros
 fi
 }
 
