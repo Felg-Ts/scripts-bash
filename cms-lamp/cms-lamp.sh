@@ -115,7 +115,7 @@ five(){
 
                 tar -xf owncloud-complete-20210326.tar.bz2 -C /var/www/
 
-                chown -R www-data: /var/www/owncloud/
+                chown -R www-data: /var/www/html/owncloud/
 
                 cat oc.txt > /etc/apache2/conf-available/owncloud.conf
 
@@ -177,11 +177,24 @@ six(){
                 
         
         then
-                        echo "Todas las Instalaciones Completadas"
+                        echo "Proceso finalizado"
         else
                 echo -e "${RED}Error...${STD}" && sleep 5
         fi
         pause
+}
+
+seven(){
+        clear
+        echo "Bases De Datos"
+
+        sql_host=”localhost”
+        slq_usuario=”root”
+        sql_password=”usuario”
+        sql_database=”nombre_db”
+        sql_args=”-h $sql_host -u $slq_usuario -p$sql_password -D $sql_database -s -e”
+        mysql $sql_args “SELECT * from usuarios;”
+
 }
 
 show_menus() {
@@ -195,7 +208,8 @@ show_menus() {
 	echo "4. Instalar-Netdata"
 	echo "5. Instalar-OwnCloud"
         echo "6. Instalar-Todo"
-	echo "7. Exit"
+        echo "7. Bases De Datos"
+	echo "8. Exit"
 }
 
 read_options(){
@@ -208,7 +222,8 @@ read_options(){
 		4) four ;;
 		5) five ;;
                 6) six ;;
-		7) exit 0;;
+		7) seven
+                8) exit 0;;
 		*) echo -e "${RED}Error...${STD}" && sleep 2
 	esac
 }
