@@ -89,19 +89,9 @@ four(){
         echo "Instalar-Netdata"
 
         if
-                apt-get install -y netdata netdata-*
-
-                apt-get install -y bash curl iproute2 python python-yaml python-beanstalkc python-dnspython python-ipaddress python-pymysql python-psycopg2 python-pymongo nodejs lm-sensors libmnl0 netcat liblz4-1 libjudydebian1 openssl git cmake
-
-                apt-get install -y zlib1g-dev uuid-dev libuv1-dev liblz4-dev libjudy-dev libssl-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config curl python autotools-dev
-
-                git clone https://github.com/netdata/netdata.git --depth=100
-
-                chmod 755 -R netdata/
-
-                cd netdata
-
-                ./netdata-installer.sh
+                apt install curl
+                curl -s https://packagecloud.io/install/repositories/netdata/netdata/script.deb.sh | sudo bash
+                apt -y install netdata
 
         then
                 echo "Instalación de Netdata Completada."
