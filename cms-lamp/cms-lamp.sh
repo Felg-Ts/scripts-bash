@@ -17,7 +17,7 @@ one(){
 
 		
 	then
-		echo "Instalación Completada"
+		echo "Instalación de Lamp Completada."
 	else
 	    	echo -e "${RED}Error...${STD}" && sleep 5
 
@@ -26,7 +26,7 @@ one(){
 }
 
 two(){
-	        clear
+	clear
         echo "2. Instalar-Wordpress"
 
         if
@@ -45,7 +45,7 @@ two(){
                 systemctl reload apache2.service
 
         then
-                echo "Instalación Completada"
+                echo "Instalación de Wordpress Completada."
         else
                 echo -e "${RED}Error...${STD}" && sleep 5
 
@@ -54,7 +54,7 @@ two(){
 }
 
 three(){
-	        clear
+	clear
         echo "3. Instalar-phpMyAdmin"
 
         if
@@ -76,7 +76,7 @@ three(){
 
                 
         then
-                echo "Instalación Completada"
+                echo "Instalación de phpMyAdmin Completada."
         else
                 echo -e "${RED}Error...${STD}" && sleep 5
 
@@ -85,7 +85,7 @@ three(){
 }
 
 four(){
-                clear
+        clear
         echo "Instalar-Netdata"
 
         if
@@ -93,18 +93,18 @@ four(){
 
                 apt-get install -y bash curl iproute2 python python-yaml python-beanstalkc python-dnspython python-ipaddress python-pymysql python-psycopg2 python-pymongo nodejs lm-sensors libmnl0 netcat liblz4-1 libjudydebian1 openssl git cmake
 
-                apt-get install -y zlib1g-dev uuid-dev libuv1-dev liblz4-dev libjudy-dev libssl-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config curl python
+                apt-get install -y zlib1g-dev uuid-dev libuv1-dev liblz4-dev libjudy-dev libssl-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config curl python autotools-dev
 
                 git clone https://github.com/netdata/netdata.git --depth=100
 
-                chmod 777 -R netdata/
+                chmod 755 -R netdata/
 
                 cd netdata
 
                 ./netdata-installer.sh
 
         then
-                echo "Instalación Completada"
+                echo "Instalación de Netdata Completada."
         else
                 echo -e "${RED}Error...${STD}" && sleep 5
 
@@ -113,67 +113,6 @@ four(){
 }
 
 five(){
-
-        clear
-	echo "1. Instalar-Todo"
-
-	if
-                apt-get update
-                
-		apt install -y apache2 libapache2-mod-php php-mysql mariadb-server
-		
-		apt -y install php-bcmath php-curl php-imagick php-gd php-mbstring php-xml php-zip
-
-                wget https://es.wordpress.org/latest-es_ES.tar.gz
-
-                tar -xf latest-es_ES.tar.gz -C /var/www/html
-
-                chown $USER:www-data /var/www/html/wordpress/ -R
-
-                chmod g+w /var/www/html/wordpress/ -R
-
-                systemctl reload apache2.service
-                
-                apt -y install php-bz2 php-mbstring php-zip
-
-                wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.tar.xz
-
-                tar -xf phpMyAdmin-5.0.2-all-languages.tar.xz -C /var/www/html/
-
-                mv /var/www/html/phpMyAdmin-5.0.2-all-languages/ /var/www/html/phpmyadmin
-
-                chown www-data /var/www/html/phpmyadmin/
-
-                systemctl reload apache2
-                
-                apt-get install -y netdata netdata-*
-
-                apt-get install -y bash curl iproute2 python python-yaml python-beanstalkc python-dnspython python-ipaddress python-pymysql python-psycopg2 python-pymongo nodejs lm-sensors libmnl0 netcat liblz4-1 libjudydebian1 openssl git cmake
-
-                apt-get install -y zlib1g-dev uuid-dev libuv1-dev liblz4-dev libjudy-dev libssl-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config curl python
-
-                git clone https://github.com/netdata/netdata.git --depth=100
-
-                chmod 777 -R netdata/
-
-                cd netdata
-
-                ./netdata-installer.sh
-                
-
-		
-	then
-		echo "Instalación Completada"
-	else
-	    	echo -e "${RED}Error...${STD}" && sleep 5
-
-	fi
-	pause
-
-
-}
-
-six(){
         clear
         echo "6. Instalar-OwnCloud"
 
@@ -197,10 +136,60 @@ six(){
                 systemctl reload apache2
 
         then
-                echo "Instalación Completada"
+                echo "Instalación de OwnCloud Completada."
         else
                 echo -e "${RED}Error...${STD}" && sleep 5
 
+        fi
+	pause
+
+
+}
+
+six(){
+        clear
+        echo "6. Instalar-Todo"
+
+        if
+                echo "Comenzando instalaciones."
+                if
+                        one
+                then
+                        if
+                                two
+                        then
+                                if
+                                        three
+                                then
+                                        if
+                                                four
+                                        then
+                                                five
+                                        else
+                                                echo "Instalación de Wordpress fallida"
+                                                echo -e "${RED}Error...${STD}" && sleep 5
+                                        fi
+
+                                else
+                                        echo "Instalación de phpMyAdmin fallida"
+                                        echo -e "${RED}Error...${STD}" && sleep 5
+                                fi
+                        else
+
+                                echo "Instalación de Wordpress fallida"
+                                echo -e "${RED}Error...${STD}" && sleep 5
+                        fi
+
+                else
+                        echo "Instalación de Lamp fallida"
+                        echo -e "${RED}Error...${STD}" && sleep 5
+                fi
+                
+        
+        then
+                        echo "Todas las Instalaciones Completadas"
+        else
+                echo -e "${RED}Error...${STD}" && sleep 5
         fi
         pause
 }
@@ -208,14 +197,14 @@ six(){
 show_menus() {
 	clear
 	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-	echo "  Instalación De cms Lamp   "
+	echo " Instalación De cms en Lamp "
 	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 	echo "1. Instalar-Lamp"
 	echo "2. Instalar-Wordpress"
 	echo "3. Instalar-phpMyAdmin"
 	echo "4. Instalar-Netdata"
-	echo "5. Instalar-Todo"
-        echo "6. Instalar-OwnCloud"
+	echo "5. Instalar-OwnCloud"
+        echo "6. Instalar-Todo"
 	echo "7. Exit"
 }
 
