@@ -46,6 +46,28 @@ two(){
 
         then
                 echo "Instalación de Wordpress Completada."
+                if
+                        echo "Base de datos de Wordpress"
+                        slq_usuario=root
+                        sql_password=usuario
+                        mysql -u $slq_usuario -p$sql_password -s -e "create database wordpress charset utf8mb4 collate utf8mb4_unicode_ci;"
+                        mysql -u $slq_usuario -p$sql_password -s -e "create user wordpress@localhost identified by 'usrwordpress123';"
+                        mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on wordpress.* to wordpress@localhost;"
+                        mysql -u $slq_usuario -p$sql_password -s -e "flush privileges;"
+                then
+
+                        echo "Base de datos creada"
+                        touch /$USER/acccesowordpress.txt
+                        echo "
+                        accceso: localhost/wordpress
+                        nombre de la base de datos: wordpress
+                        usuario db: wordpress
+                        contraseña db: usrwordpress123 " > /$USER/acccesowordpress.txt
+                        echo "Se a creado un fichero en /$USER/acccesowordpress.txt con la inforación de acceso a wordpress"
+
+                else
+                echo "Error en la creación de la base de datos"
+                fi
         else
                 echo -e "${RED}Error...${STD}" && sleep 5
 
@@ -73,7 +95,32 @@ three(){
 
                 systemctl reload apache2
 
+                if
+                        echo "Base de datos de phpMyAdmin"
+                        slq_usuario=root
+                        sql_password=usuario
+                        mysql -u $slq_usuario -p$sql_password -s -e "create database phpmyadmin charset utf8mb4 collate utf8mb4_unicode_ci;"
+                        mysql -u $slq_usuario -p$sql_password -s -e "create user phpmyadmin@localhost identified by 'usrphpmyadmin123';"
+                        mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on wordpress.* to phpmyadmin@localhost;"
+                        mysql -u $slq_usuario -p$sql_password -s -e "flush privileges;"
+                then
 
+                        echo "Base de datos creada"
+                        touch /$USER/acccesophpmyadmin.txt
+                        echo "
+                        accceso: localhost/phpmyadmin
+                        nombre de la base de datos: phpmyadmin
+                        usuario db: phpmyadmin
+                        contraseña db: usrphpmyadmin123 " > /$USER/acccesophpmyadmin.txt
+                        echo "Se a creado un fichero en /$USER/acccesophpmyadmin.txt con la inforación de acceso a phpmyadmin"
+
+                else
+                echo "Error en la creación de la base de datos"
+                fi
+        else
+                echo -e "${RED}Error...${STD}" && sleep 5
+
+        fi
                 
         then
                 echo "Instalación de phpMyAdmin Completada."
@@ -184,19 +231,6 @@ six(){
         pause
 }
 
-seven(){
-        clear
-        echo "Bases De Datos"
-
-        sql_host=”localhost”
-        slq_usuario=”root”
-        sql_password=”usuario”
-        sql_database=”nombre_db”
-        sql_args=”-h $sql_host -u $slq_usuario -p$sql_password -D $sql_database -s -e”
-        mysql $sql_args “SELECT * from usuarios;”
-
-}
-
 show_menus() {
 	clear
 	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -208,8 +242,7 @@ show_menus() {
 	echo "4. Instalar-Netdata"
 	echo "5. Instalar-OwnCloud"
         echo "6. Instalar-Todo"
-        echo "7. Bases De Datos"
-	echo "8. Exit"
+        echo "7. Exit"
 }
 
 read_options(){
@@ -222,13 +255,21 @@ read_options(){
 		4) four ;;
 		5) five ;;
                 6) six ;;
-		7) seven; ;
-                8) exit 0 ;;
+		7) exit 0 ;;
 		*) echo -e "${RED}Error...${STD}" && sleep 2
 	esac
 }
 
 trap '' SIGINT SIGQUIT SIGTSTP
+
+if [ $USER = "root"]
+
+then
+        echo ""
+else
+        echo "Se necesita estar logueado como root"
+        exit
+fi
 
 while true
 do
