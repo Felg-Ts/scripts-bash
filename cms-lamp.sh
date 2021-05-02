@@ -111,7 +111,7 @@ three(){
                         sql_password=usuario
                         mysql -u $slq_usuario -p$sql_password -s -e "create database phpmyadmin charset utf8mb4 collate utf8mb4_unicode_ci;"
                         mysql -u $slq_usuario -p$sql_password -s -e "create user phpmyadmin@localhost identified by 'usrphpmyadmin123';"
-                        mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on wordpress.* to phpmyadmin@localhost;"
+                        mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on phpmyadmin.* to phpmyadmin@localhost;"
                         mysql -u $slq_usuario -p$sql_password -s -e "flush privileges;"
                 then
                         echo "Base de datos creada"
@@ -195,7 +195,7 @@ five(){
 
                         echo "Base de datos creada"
                         echo "
-                        accceso: localhost/ownCloud
+                        accceso: localhost/owncloud
                         nombre de la base de datos: ownCloud
                         usuario db: ownCloud
                         contraseña db: usrownCloud123 " > /$USER/acccesoownCloud.txt
@@ -302,7 +302,7 @@ two_db(){
                 sql_password=usuario
                 mysql -u $slq_usuario -p$sql_password -s -e "create database phpmyadmin charset utf8mb4 collate utf8mb4_unicode_ci;"
                 mysql -u $slq_usuario -p$sql_password -s -e "create user phpmyadmin@localhost identified by 'usrphpmyadmin123';"
-                mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on wordpress.* to phpmyadmin@localhost;"
+                mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on phpmyadmin.* to phpmyadmin@localhost;"
                 mysql -u $slq_usuario -p$sql_password -s -e "flush privileges;"
         then
                 echo "Base de datos creada"
@@ -359,7 +359,7 @@ show_menus() {
 
 read_options(){
 	local choice
-	read -p "Escoje una opción [ 1 - 6] " choice
+	read -p "Escoje una opción [ 1 - 8] " choice
 	case $choice in
 		1) one ;;
 		2) two ;;
