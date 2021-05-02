@@ -166,7 +166,7 @@ five(){
 
                 wget https://download.owncloud.org/community/owncloud-complete-20210326.tar.bz2
 
-                tar -xf owncloud-complete-20210326.tar.bz2 -C /var/www/
+                tar -xf owncloud-complete-20210326.tar.bz2 -C /var/www/html/
 
                 chown -R www-data: /var/www/html/owncloud/
 
@@ -194,7 +194,6 @@ five(){
                 then
 
                         echo "Base de datos creada"
-                        touch /$USER/acccesownCloud.txt
                         echo "
                         accceso: localhost/ownCloud
                         nombre de la base de datos: ownCloud
