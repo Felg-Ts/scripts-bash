@@ -10,13 +10,10 @@ pause(){
 one(){
         clear
 	echo "1. Instalar-Lamp"
-        echo "Quiere realizar la instalación de la pila Lamp? [y/n]"
-        read vd
 
-	if [ $vd = "y" ]
+	if
                 apt-get update
 		apt install -y apache2 libapache2-mod-php php-mysql mariadb-server
-
 		
 	then
 		echo "Instalación de Lamp Completada."
@@ -268,6 +265,84 @@ six(){
         pause
 }
 
+seven(){
+        while true
+        do
+	show_menus_db
+	read_options_db
+        done
+}
+
+one_db(){
+        if
+                echo "Base de datos de Wordpress"
+                slq_usuario=root
+                sql_password=usuario
+                mysql -u $slq_usuario -p$sql_password -s -e "create database wordpress charset utf8mb4 collate utf8mb4_unicode_ci;"
+                mysql -u $slq_usuario -p$sql_password -s -e "create user wordpress@localhost identified by 'usrwordpress123';"
+                mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on wordpress.* to wordpress@localhost;"
+                mysql -u $slq_usuario -p$sql_password -s -e "flush privileges;"
+        then
+                echo "Base de datos creada"
+                echo "
+                accceso: localhost/wordpress
+                nombre de la base de datos: wordpress
+                usuario db: wordpress
+                contraseña db: usrwordpress123 " >> /$USER/acccesowordpress.txt
+                echo "Se a creado un fichero en /$USER/acccesowordpress.txt con la inforación de acceso a wordpress"
+        else
+                echo "Error en la creación de la base de datos"
+        fi
+        pause
+}
+
+two_db(){
+        if
+                echo "Base de datos de phpMyAdmin"
+                slq_usuario=root
+                sql_password=usuario
+                mysql -u $slq_usuario -p$sql_password -s -e "create database phpmyadmin charset utf8mb4 collate utf8mb4_unicode_ci;"
+                mysql -u $slq_usuario -p$sql_password -s -e "create user phpmyadmin@localhost identified by 'usrphpmyadmin123';"
+                mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on wordpress.* to phpmyadmin@localhost;"
+                mysql -u $slq_usuario -p$sql_password -s -e "flush privileges;"
+        then
+                echo "Base de datos creada"
+                echo "
+                accceso: localhost/phpmyadmin
+                nombre de la base de datos: phpmyadmin
+                usuario db: phpmyadmin
+                contraseña db: usrphpmyadmin123 " >> /$USER/acccesophpmyadmin.txt
+                echo "Se a creado un fichero en /$USER/acccesophpmyadmin.txt con la inforación de acceso a phpmyadmin"
+        else
+        echo "Error en la creación de la base de datos"
+        fi
+        pause
+}
+
+three_db(){
+        if
+                echo "Base de datos de OwnCloud"
+                slq_usuario=root
+                sql_password=usuario
+                mysql -u $slq_usuario -p$sql_password -s -e "create database ownCloud charset utf8mb4 collate utf8mb4_unicode_ci;"
+                mysql -u $slq_usuario -p$sql_password -s -e "create user ownCloud@localhost identified by 'usrownCloud123';"
+                mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on ownCloud.* to ownCloud@localhost;"
+                mysql -u $slq_usuario -p$sql_password -s -e "flush privileges;"
+        then
+                echo "Base de datos creada"
+                touch /$USER/acccesownCloud.txt
+                echo "
+                accceso: localhost/ownCloud
+                nombre de la base de datos: ownCloud
+                usuario db: ownCloud
+                contraseña db: usrownCloud123 " > /$USER/acccesoownCloud.txt
+                echo "Se a creado un fichero en /$USER/acccesoownCloud.txt con la inforación de acceso a ownCloud"
+        else
+                echo "Error en la creación de la base de datos"
+        fi
+        pause
+}
+
 show_menus() {
 	clear
 	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -296,6 +371,34 @@ read_options(){
 		*) echo -e "${RED}Error...${STD}" && sleep 2
 	esac
 }
+
+
+
+show_menus_db() {
+	clear
+	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	echo " Bases de datos de los cms  "
+	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	echo "7-1. Generar db Wordpress"
+	echo "7-2. Generar db phpMyAdmin"
+	echo "7-3. Generar db OwnCloud"
+        echo "7-4. Exit"
+}
+
+
+read_options_db(){
+	local choice1
+	read -p "Escoje una opción [ 7-1 - 7-4] " choice1
+	case $choice1 in
+		7-1) one_db ;;
+		7-2) two_db ;;
+		7-3) three_db ;;
+		7-4) exit 0 ;;
+		*) echo -e "${RED}Error...${STD}" && sleep 2
+	esac
+}
+}
+
 
 trap '' SIGINT SIGQUIT SIGTSTP
 
