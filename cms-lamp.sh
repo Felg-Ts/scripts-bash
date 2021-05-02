@@ -71,7 +71,7 @@ two(){
                         nombre de la base de datos: wordpress
                         usuario db: wordpress
                         contraseña db: usrwordpress123 " >> /$USER/acccesowordpress.txt
-                        echo "Se a creado un fichero en /$USER/acccesowordpress.txt con la inforación de acceso a wordpress"
+                        echo "Se a creado un fichero en /$USER/acccesowordpress.txt con la información de acceso a wordpress"
 
                 else
                 echo "Error en la creación de la base de datos"
@@ -120,7 +120,7 @@ three(){
                         nombre de la base de datos: phpmyadmin
                         usuario db: phpmyadmin
                         contraseña db: usrphpmyadmin123 " >> /$USER/acccesophpmyadmin.txt
-                        echo "Se a creado un fichero en /$USER/acccesophpmyadmin.txt con la inforación de acceso a phpmyadmin"
+                        echo "Se a creado un fichero en /$USER/acccesophpmyadmin.txt con la información de acceso a phpmyadmin"
 
                 else
                 echo "Error en la creación de la base de datos"
@@ -147,7 +147,7 @@ four(){
                 echo "Instalación de Netdata Completada."
                 echo "
                 accceso: localhost:19999" >> /$USER/acccesonetdata.txt
-                echo "Se a creado un fichero en /$USER/acccesonetdata.txt con la inforación de acceso a netdata"
+                echo "Se a creado un fichero en /$USER/acccesonetdata.txt con la información de acceso a netdata"
         else
                 echo -e "${RED}Error...${STD}" && sleep 5
 
@@ -199,7 +199,7 @@ five(){
                         nombre de la base de datos: ownCloud
                         usuario db: ownCloud
                         contraseña db: usrownCloud123 " > /$USER/acccesoownCloud.txt
-                        echo "Se a creado un fichero en /$USER/acccesoownCloud.txt con la inforación de acceso a ownCloud"
+                        echo "Se a creado un fichero en /$USER/acccesoownCloud.txt con la información de acceso a ownCloud"
 
                 else
                 echo "Error en la creación de la base de datos"
@@ -258,6 +258,7 @@ six(){
         
         then
                         echo "Proceso finalizado"
+                        echo "Todos los ficheros con la información de acceso se encuentran en el directorio /$USER/"
         else
                 echo -e "${RED}Error...${STD}" && sleep 5
         fi
@@ -354,7 +355,7 @@ show_menus() {
 	echo "5. Instalar-OwnCloud"
         echo "6. Instalar-Todo"
         echo "7. Generación Bases de Datos"
-        echo "9. Exit"
+        echo "8. Exit"
 }
 
 read_options(){

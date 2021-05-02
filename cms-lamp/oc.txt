@@ -1,3 +1,0 @@
-<Directory /var/www/owncloud>
-        AllowOverride all
-</Directory>
