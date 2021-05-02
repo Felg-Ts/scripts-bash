@@ -10,8 +10,10 @@ pause(){
 one(){
         clear
 	echo "1. Instalar-Lamp"
+        echo "Quiere realizar la instalación de la pila Lamp? [y/n]"
+        read vd
 
-	if
+	if [ $vd = "y" ]
                 apt-get update
 		apt install -y apache2 libapache2-mod-php php-mysql mariadb-server
 
@@ -41,6 +43,16 @@ two(){
                 chown $USER:www-data /var/www/html/wordpress/ -R
 
                 chmod g+w /var/www/html/wordpress/ -R
+                
+                echo "
+                <Directory /var/www/html/wordpress>
+                        AllowOverride all
+                </Directory>
+                " >> /etc/apache2/conf-available/wordpress.conf
+
+                a2enmod rewrite
+
+                a2enconf wordpress
 
                 systemctl reload apache2.service
 
@@ -57,12 +69,11 @@ two(){
                 then
 
                         echo "Base de datos creada"
-                        touch /$USER/acccesowordpress.txt
                         echo "
                         accceso: localhost/wordpress
                         nombre de la base de datos: wordpress
                         usuario db: wordpress
-                        contraseña db: usrwordpress123 " > /$USER/acccesowordpress.txt
+                        contraseña db: usrwordpress123 " >> /$USER/acccesowordpress.txt
                         echo "Se a creado un fichero en /$USER/acccesowordpress.txt con la inforación de acceso a wordpress"
 
                 else
@@ -95,6 +106,8 @@ three(){
 
                 systemctl reload apache2
 
+                echo "Instalación de Netdata Completada."
+
                 if
                         echo "Base de datos de phpMyAdmin"
                         slq_usuario=root
@@ -104,24 +117,17 @@ three(){
                         mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on wordpress.* to phpmyadmin@localhost;"
                         mysql -u $slq_usuario -p$sql_password -s -e "flush privileges;"
                 then
-
                         echo "Base de datos creada"
-                        touch /$USER/acccesophpmyadmin.txt
                         echo "
                         accceso: localhost/phpmyadmin
                         nombre de la base de datos: phpmyadmin
                         usuario db: phpmyadmin
-                        contraseña db: usrphpmyadmin123 " > /$USER/acccesophpmyadmin.txt
+                        contraseña db: usrphpmyadmin123 " >> /$USER/acccesophpmyadmin.txt
                         echo "Se a creado un fichero en /$USER/acccesophpmyadmin.txt con la inforación de acceso a phpmyadmin"
 
                 else
                 echo "Error en la creación de la base de datos"
                 fi
-        else
-                echo -e "${RED}Error...${STD}" && sleep 5
-
-        fi
-                
         then
                 echo "Instalación de phpMyAdmin Completada."
         else
@@ -142,6 +148,9 @@ four(){
 
         then
                 echo "Instalación de Netdata Completada."
+                echo "
+                accceso: localhost:19999" >> /$USER/acccesonetdata.txt
+                echo "Se a creado un fichero en /$USER/acccesonetdata.txt con la inforación de acceso a netdata"
         else
                 echo -e "${RED}Error...${STD}" && sleep 5
 
@@ -164,20 +173,48 @@ five(){
 
                 chown -R www-data: /var/www/html/owncloud/
 
-                cat oc.txt > /etc/apache2/conf-available/owncloud.conf
-
-                systemctl reload apache2.service
+                echo "
+                <Directory /var/www/html/owncloud>
+                        AllowOverride all
+                </Directory>" >> /etc/apache2/conf-available/owncloud.conf
 
                 a2enconf owncloud
 
-                systemctl reload apache2
+                echo "*/15 * * * * www-data /usr/bin/php /var/www/owncloud/occ system:cron" >> /etc/cron.d/owncloud
+
+                systemctl reload apache2.service
 
         then
                 echo "Instalación de OwnCloud Completada."
+                if
+                        echo "Base de datos de OwnCloud"
+                        slq_usuario=root
+                        sql_password=usuario
+                        mysql -u $slq_usuario -p$sql_password -s -e "create database ownCloud charset utf8mb4 collate utf8mb4_unicode_ci;"
+                        mysql -u $slq_usuario -p$sql_password -s -e "create user ownCloud@localhost identified by 'usrownCloud123';"
+                        mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on ownCloud.* to ownCloud@localhost;"
+                        mysql -u $slq_usuario -p$sql_password -s -e "flush privileges;"
+                then
+
+                        echo "Base de datos creada"
+                        touch /$USER/acccesownCloud.txt
+                        echo "
+                        accceso: localhost/ownCloud
+                        nombre de la base de datos: ownCloud
+                        usuario db: ownCloud
+                        contraseña db: usrownCloud123 " > /$USER/acccesoownCloud.txt
+                        echo "Se a creado un fichero en /$USER/acccesoownCloud.txt con la inforación de acceso a ownCloud"
+
+                else
+                echo "Error en la creación de la base de datos"
+                fi
+
+                
         else
                 echo -e "${RED}Error...${STD}" && sleep 5
 
         fi
+        
 	pause
 
 
@@ -262,7 +299,7 @@ read_options(){
 
 trap '' SIGINT SIGQUIT SIGTSTP
 
-if [ $USER = "root"]
+if [ $USER = "root" ]
 
 then
         echo ""
