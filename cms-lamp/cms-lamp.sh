@@ -354,7 +354,8 @@ show_menus() {
 	echo "4. Instalar-Netdata"
 	echo "5. Instalar-OwnCloud"
         echo "6. Instalar-Todo"
-        echo "7. Exit"
+        echo "7. Generación Bases de Datos"
+        echo "9. Exit"
 }
 
 read_options(){
@@ -367,7 +368,8 @@ read_options(){
 		4) four ;;
 		5) five ;;
                 6) six ;;
-		7) exit 0 ;;
+		7) seven ;;
+                8) exit 0 ;;
 		*) echo -e "${RED}Error...${STD}" && sleep 2
 	esac
 }
@@ -397,8 +399,6 @@ read_options_db(){
 		*) echo -e "${RED}Error...${STD}" && sleep 2
 	esac
 }
-}
-
 
 trap '' SIGINT SIGQUIT SIGTSTP
 
