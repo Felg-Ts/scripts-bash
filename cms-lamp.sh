@@ -213,7 +213,6 @@ five(){
         
 	pause
 
-
 }
 
 six(){
@@ -374,8 +373,6 @@ read_options(){
 	esac
 }
 
-
-
 show_menus_db() {
 	clear
 	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -386,7 +383,6 @@ show_menus_db() {
 	echo "7-3. Generar db OwnCloud"
         echo "7-4. Exit"
 }
-
 
 read_options_db(){
 	local choice1
