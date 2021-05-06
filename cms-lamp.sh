@@ -58,7 +58,7 @@ two(){
                 if
                         echo "Base de datos de Wordpress"
                         slq_usuario=root
-                        sql_password=usuario
+                        #sql_password=usuario
                         mysql -u $slq_usuario -p$sql_password -s -e "create database wordpress charset utf8mb4 collate utf8mb4_unicode_ci;"
                         mysql -u $slq_usuario -p$sql_password -s -e "create user wordpress@localhost identified by 'usrwordpress123';"
                         mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on wordpress.* to wordpress@localhost;"
@@ -108,7 +108,7 @@ three(){
                 if
                         echo "Base de datos de phpMyAdmin"
                         slq_usuario=root
-                        sql_password=usuario
+                        #sql_password=usuario
                         mysql -u $slq_usuario -p$sql_password -s -e "create database phpmyadmin charset utf8mb4 collate utf8mb4_unicode_ci;"
                         mysql -u $slq_usuario -p$sql_password -s -e "create user phpmyadmin@localhost identified by 'usrphpmyadmin123';"
                         mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on *.* to phpmyadmin@localhost;"
@@ -186,7 +186,7 @@ five(){
                 if
                         echo "Base de datos de OwnCloud"
                         slq_usuario=root
-                        sql_password=usuario
+                        #sql_password=usuario
                         mysql -u $slq_usuario -p$sql_password -s -e "create database ownCloud charset utf8mb4 collate utf8mb4_unicode_ci;"
                         mysql -u $slq_usuario -p$sql_password -s -e "create user ownCloud@localhost identified by 'usrownCloud123';"
                         mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on ownCloud.* to ownCloud@localhost;"
@@ -276,7 +276,7 @@ one_db(){
         if
                 echo "Base de datos de Wordpress"
                 slq_usuario=root
-                sql_password=usuario
+                #sql_password=usuario
                 mysql -u $slq_usuario -p$sql_password -s -e "create database wordpress charset utf8mb4 collate utf8mb4_unicode_ci;"
                 mysql -u $slq_usuario -p$sql_password -s -e "create user wordpress@localhost identified by 'usrwordpress123';"
                 mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on wordpress.* to wordpress@localhost;"
@@ -299,7 +299,7 @@ two_db(){
         if
                 echo "Base de datos de phpMyAdmin"
                 slq_usuario=root
-                sql_password=usuario
+                #sql_password=usuario
                 mysql -u $slq_usuario -p$sql_password -s -e "create database phpmyadmin charset utf8mb4 collate utf8mb4_unicode_ci;"
                 mysql -u $slq_usuario -p$sql_password -s -e "create user phpmyadmin@localhost identified by 'usrphpmyadmin123';"
                 mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on *.* to phpmyadmin@localhost;"
@@ -322,7 +322,7 @@ three_db(){
         if
                 echo "Base de datos de OwnCloud"
                 slq_usuario=root
-                sql_password=usuario
+                #sql_password=usuario
                 mysql -u $slq_usuario -p$sql_password -s -e "create database ownCloud charset utf8mb4 collate utf8mb4_unicode_ci;"
                 mysql -u $slq_usuario -p$sql_password -s -e "create user ownCloud@localhost identified by 'usrownCloud123';"
                 mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on ownCloud.* to ownCloud@localhost;"
@@ -401,7 +401,9 @@ trap '' SIGINT SIGQUIT SIGTSTP
 if [ $USER = "root" ]
 
 then
-        echo ""
+        echo "Introduzca la contraseña de root"
+        echo "Asegurese de escribir bien la contraseña o podria haber errores en las instalaciones."
+        read sql_password
 else
         echo "Se necesita estar logueado como root"
         exit
