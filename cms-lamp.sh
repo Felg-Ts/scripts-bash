@@ -3,9 +3,13 @@
 RED='\033[0;41;30m'
 STD='\033[0;0;39m'
 
+#Función para añadir pausas durante las ejecuciones de las otras funciones.
+
 pause(){
 	read -p "Presiona [Enter] para continuar..." fackEnterKey
 }
+
+#Función para intalación de una pila lamp.
 
 one(){
         clear
@@ -23,6 +27,8 @@ one(){
 	fi
 	pause
 }
+
+#Función para instalación y configuración de cms wordpress.
 
 two(){
 	clear
@@ -58,7 +64,6 @@ two(){
                 if
                         echo "Base de datos de Wordpress"
                         slq_usuario=root
-                        #sql_password=usuario
                         mysql -u $slq_usuario -p$sql_password -s -e "create database wordpress charset utf8mb4 collate utf8mb4_unicode_ci;"
                         mysql -u $slq_usuario -p$sql_password -s -e "create user wordpress@localhost identified by 'usrwordpress123';"
                         mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on wordpress.* to wordpress@localhost;"
@@ -82,6 +87,8 @@ two(){
         fi
         pause
 }
+
+#Función para instalación y configuración de phpmyadmin.
 
 three(){
 	clear
@@ -108,7 +115,6 @@ three(){
                 if
                         echo "Base de datos de phpMyAdmin"
                         slq_usuario=root
-                        #sql_password=usuario
                         mysql -u $slq_usuario -p$sql_password -s -e "create database phpmyadmin charset utf8mb4 collate utf8mb4_unicode_ci;"
                         mysql -u $slq_usuario -p$sql_password -s -e "create user phpmyadmin@localhost identified by 'usrphpmyadmin123';"
                         mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on *.* to phpmyadmin@localhost;"
@@ -134,6 +140,8 @@ three(){
         pause
 }
 
+#Función para instalación y configuración de netdata.
+
 four(){
         clear
         echo "Instalar-Netdata"
@@ -154,6 +162,8 @@ four(){
         fi
         pause
 }
+
+#Función para instalación y configuración de owncloud.
 
 five(){
         clear
@@ -186,7 +196,6 @@ five(){
                 if
                         echo "Base de datos de OwnCloud"
                         slq_usuario=root
-                        #sql_password=usuario
                         mysql -u $slq_usuario -p$sql_password -s -e "create database ownCloud charset utf8mb4 collate utf8mb4_unicode_ci;"
                         mysql -u $slq_usuario -p$sql_password -s -e "create user ownCloud@localhost identified by 'usrownCloud123';"
                         mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on ownCloud.* to ownCloud@localhost;"
@@ -214,6 +223,8 @@ five(){
 	pause
 
 }
+
+#Función que ejecuta todas las funciones anteriores relacionadas con las intalaciones y configuraciones.
 
 six(){
         clear
@@ -264,6 +275,8 @@ six(){
         pause
 }
 
+#Función que muestra un menú secundario para la creación de las bases de datos en caso de fallo en la instalación.
+
 seven(){
         while true
         do
@@ -272,11 +285,12 @@ seven(){
         done
 }
 
+#Función que crea la base de datos para la aplicación wordpress (esta función se ejecuta en caso de que en la función original de instalación fallase en este proceso).
+
 one_db(){
         if
                 echo "Base de datos de Wordpress"
                 slq_usuario=root
-                #sql_password=usuario
                 mysql -u $slq_usuario -p$sql_password -s -e "create database wordpress charset utf8mb4 collate utf8mb4_unicode_ci;"
                 mysql -u $slq_usuario -p$sql_password -s -e "create user wordpress@localhost identified by 'usrwordpress123';"
                 mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on wordpress.* to wordpress@localhost;"
@@ -295,11 +309,12 @@ one_db(){
         pause
 }
 
+#Función que crea la base de datos para la aplicación phpmyadmin (esta función se ejecuta en caso de que en la función original de instalación fallase en este proceso).
+
 two_db(){
         if
                 echo "Base de datos de phpMyAdmin"
                 slq_usuario=root
-                #sql_password=usuario
                 mysql -u $slq_usuario -p$sql_password -s -e "create database phpmyadmin charset utf8mb4 collate utf8mb4_unicode_ci;"
                 mysql -u $slq_usuario -p$sql_password -s -e "create user phpmyadmin@localhost identified by 'usrphpmyadmin123';"
                 mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on *.* to phpmyadmin@localhost;"
@@ -318,11 +333,12 @@ two_db(){
         pause
 }
 
+#Función que crea la base de datos para la aplicación owncloud (esta función se ejecuta en caso de que en la función original de instalación fallase en este proceso).
+
 three_db(){
         if
                 echo "Base de datos de OwnCloud"
                 slq_usuario=root
-                #sql_password=usuario
                 mysql -u $slq_usuario -p$sql_password -s -e "create database ownCloud charset utf8mb4 collate utf8mb4_unicode_ci;"
                 mysql -u $slq_usuario -p$sql_password -s -e "create user ownCloud@localhost identified by 'usrownCloud123';"
                 mysql -u $slq_usuario -p$sql_password -s -e "grant all privileges on ownCloud.* to ownCloud@localhost;"
@@ -342,6 +358,8 @@ three_db(){
         pause
 }
 
+#Función que muestra el menú principal de opciones para ejecutar las funciones.
+
 show_menus() {
 	clear
 	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -356,6 +374,8 @@ show_menus() {
         echo "7. Generación Bases de Datos"
         echo "8. Exit"
 }
+
+#Función para ejecutar las funciones del menú principal con una tecla concreta.
 
 read_options(){
 	local choice
@@ -373,6 +393,8 @@ read_options(){
 	esac
 }
 
+#Función que muestra el menú secundario de creación de bases de datos.
+
 show_menus_db() {
 	clear
 	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -383,6 +405,8 @@ show_menus_db() {
 	echo "7-3. Generar db OwnCloud"
         echo "7-4. Exit"
 }
+
+#Función para ejecutar las funciones de menú secundario con una tecla concreta.
 
 read_options_db(){
 	local choice1
@@ -396,6 +420,8 @@ read_options_db(){
 	esac
 }
 
+#Lo primero que se ejecuta del script. Pide contraseña de root para la creación de las bases de datos y muestra el menú principal.
+
 trap '' SIGINT SIGQUIT SIGTSTP
 
 if [ $USER = "root" ]
@@ -404,6 +430,7 @@ then
         echo "Introduzca la contraseña de root"
         echo "Asegurese de escribir bien la contraseña o podria haber errores en las instalaciones."
         read sql_password
+        #sql_password=root
 else
         echo "Se necesita estar logueado como root"
         exit
