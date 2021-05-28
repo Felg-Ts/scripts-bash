@@ -1,3 +1,8 @@
+#Este script se encarga de instalar Lamp y tambien tiene la posibilidad de instalar cms y una aplicación para monitorizar el rendimiento (netdata). 
+#En la instalación de cada aplicación se instala sus dependencias, se descargar el binario de aplicación, 
+#lo descomprime, lo mueve al directorio /var/www/html, 
+#le ajusta los permisos para que lo controle apache y crea sus bases de datos mas un fichero ubicado en /root con todo lo necesario para poder continuar con la instalación desde el navegador y en caso de fallo en la creación de las bases de datos en las instalaciones hay un segundo menú con opciones para unicamente crear las bases de datos.
+
 #!/bin/bash
 
 RED='\033[0;41;30m'
@@ -14,6 +19,8 @@ pause(){
 one(){
         clear
 	echo "1. Instalar-Lamp"
+
+#Instalación de paquetes necesarios para lamp y en caso de fallo da un mensaje de error
 
 	if
                 apt-get update
@@ -35,6 +42,9 @@ two(){
         echo "2. Instalar-Wordpress"
 
         if
+
+#Instalación de paquetes necesarios para wordpress + descarga del binario de wordpress y ajustes de permisos.
+
                 apt-get update
 
                 apt -y install php-bcmath php-curl php-imagick php-gd php-mbstring php-xml php-zip
@@ -46,7 +56,9 @@ two(){
                 chown $USER:www-data /var/www/html/wordpress/ -R
 
                 chmod g+w /var/www/html/wordpress/ -R
-                
+
+#Creación del fichero virtualhosts y activación de módulos para el acceso desde el navegador.
+
                 echo "
                 <Directory /var/www/html/wordpress>
                         AllowOverride all
@@ -60,6 +72,9 @@ two(){
                 systemctl reload apache2.service
 
         then
+
+#Creación de la base de datos para wordpress y generación de fichero de credenciales para la instalación de wordpress.
+
                 echo "Instalación de Wordpress Completada."
                 if
                         echo "Base de datos de Wordpress"
@@ -96,6 +111,8 @@ three(){
 
         if
 
+#Instalación de paquetes necesarios para phpyadmin + descarga del binario de phpmyadmin y ajustes de permisos.
+
                 apt-get update
 
                 apt -y install php-bz2 php-mbstring php-zip
@@ -113,6 +130,10 @@ three(){
                 echo "Instalación de Netdata Completada."
 
                 if
+
+#Creación de la base de datos para phpmyadmin (este usuario puede acceder al resto de bases de datos) y generación de fichero de credenciales para la instalación de phpmyadmin.
+
+
                         echo "Base de datos de phpMyAdmin"
                         slq_usuario=root
                         mysql -u $slq_usuario -p$sql_password -s -e "create database phpmyadmin charset utf8mb4 collate utf8mb4_unicode_ci;"
@@ -152,6 +173,10 @@ four(){
                 apt -y install netdata
 
         then
+
+#Generación de fichero con ruta de acceso a netdata. (Esta instalación está pensada para acceder a netdata desde el localhosts.)
+
+
                 echo "Instalación de Netdata Completada."
                 echo "
                 accceso: localhost:19999" >> /$USER/acccesonetdata.txt
@@ -170,6 +195,9 @@ five(){
         echo "6. Instalar-OwnCloud"
 
         if
+
+#Instalación de paquetes necesarios para owncloud + descarga del binario de owncloud y ajustes de permisos.
+
                 apt-get update
 
                 apt -y install gnupg php-apcu php-curl php-gd php-intl php-mbstring php-xml php-zip php-mysql php-pgsql
@@ -194,6 +222,9 @@ five(){
         then
                 echo "Instalación de OwnCloud Completada."
                 if
+
+#Creación de la base de datos para owncloud y generación de fichero de credenciales para la instalación de owncloud.
+
                         echo "Base de datos de OwnCloud"
                         slq_usuario=root
                         mysql -u $slq_usuario -p$sql_password -s -e "create database ownCloud charset utf8mb4 collate utf8mb4_unicode_ci;"
@@ -358,6 +389,15 @@ three_db(){
         pause
 }
 
+four_db(){
+
+        while true
+        do
+	show_menus
+	read_options
+        done
+
+}
 #Función que muestra el menú principal de opciones para ejecutar las funciones.
 
 show_menus() {
@@ -415,7 +455,7 @@ read_options_db(){
 		7-1) one_db ;;
 		7-2) two_db ;;
 		7-3) three_db ;;
-		7-4) exit 0 ;;
+		7-4) four_db ;;
 		*) echo -e "${RED}Error...${STD}" && sleep 2
 	esac
 }
@@ -427,10 +467,21 @@ trap '' SIGINT SIGQUIT SIGTSTP
 if [ $USER = "root" ]
 
 then
+#Tiene que introducir la contraseña de root para poder crear las bases de datos.
+
+#En caso de no querer tener que poner la contraseña por cada ejecución comente las lineas. 
+#Ojo el hacer esto implica que su contraseña la puede ver cualquiera que mire el codigo del script.
+#1"echo "Introduzca la contraseña de root""
+#2 "echo "Asegurese de escribir bien la contraseña o podria haber errores en las instalaciones.""
+#y "read -s sql_password"
+#Ahora quite el comentario a la linea "#sql_password=root" y cambia root por su contraseña de root.
+
         echo "Introduzca la contraseña de root"
         echo "Asegurese de escribir bien la contraseña o podria haber errores en las instalaciones."
-        read sql_password
+        read -s sql_password
         #sql_password=root
+        echo "Recuerde que para instalar los cms primero tiene que ser instalada la opción 1 (instalar-Lamp)"
+        pause
 else
         echo "Se necesita estar logueado como root"
         exit
